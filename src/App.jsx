@@ -1,6 +1,8 @@
 import React from 'react';
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
-import './index.css'
+import './index.css';
+import Navbar from './components/Navbar';
+import { Home, About, Projects, Contact } from './pages';
 
 
 
@@ -8,14 +10,18 @@ import './index.css'
 const App = () => {
   return (
 
-    <main>
-      
-    <div>
-      <h1 className="text-3xl font-bold text-gray-400">
-      Hello world!
-    </h1>
-    </div>
-    
+    <main className="bg-slate-300/20">
+      <Router>
+       <Navbar />
+
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route  path="/" element={<About/>}/>
+          <Route  path="/" element={<Projects/>}/>
+          <Route  path="/" element={<Contact/>}/>
+
+    </Routes>
+    </Router>
     </main>
   )
 }
