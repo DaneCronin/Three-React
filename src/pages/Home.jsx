@@ -16,6 +16,8 @@ Popp Up
 const Home = () => {
   // New useState to handle rotation of the island
   const [ isRotating, setIsRotating] = useState(false);
+  //New useSate to handle setCurrentStage of positions of Island Rotation
+  const [currentStage, setCurrentStage] = useState(1);
 
 
 
@@ -97,6 +99,7 @@ const [planeScale, planePosition] = adjustPlaneForScreenSize();
           // Pass isRotating to rotate island with cursor grab
           isRotating={isRotating}
           setIsRotating={setIsRotating}
+          setCurrentStage={setCurrentStage}
           />
 
 {/* Need to pass in the props of scale and position into Plane  */}
