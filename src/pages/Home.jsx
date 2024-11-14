@@ -59,7 +59,7 @@ const Home = () => {
 
 
 // Call AdjustIslandScreenSize function above with properties of scale, position and rotation
-const [islandScale, islandPosition, islandRotation] = adjustIslandForScreenSize();
+const [islandScale, islandPosition] = adjustIslandForScreenSize();
 
 const [planeScale, planePosition] = adjustPlaneForScreenSize();
 
@@ -106,7 +106,7 @@ const [planeScale, planePosition] = adjustPlaneForScreenSize();
           //Pass in props for island scale and position
           position= {islandPosition}
           scale = {islandScale}
-          rotation={islandRotation}
+          rotation = {[0.1, 4.7077, 0]}
           // Pass isRotating to rotate island with cursor grab
           isRotating={isRotating}
           setIsRotating={setIsRotating}
@@ -115,10 +115,10 @@ const [planeScale, planePosition] = adjustPlaneForScreenSize();
 
 {/* Need to pass in the props of scale and position into Plane  */}
             <Plane
-            planeScale={planeScale}
-            planePosition={planePosition}
+            scale={planeScale}
+           position={planePosition}
             isRotating={isRotating}
-            rotation={[0,20,0]}
+            rotation={[0,20.1,0]}
               />
 
           </Suspense>
