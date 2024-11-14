@@ -88,7 +88,9 @@ const [planeScale, planePosition] = adjustPlaneForScreenSize();
            <Bird/>
 
             {/* Adding in Sky.jsx */}
-            <Sky/>
+            <Sky
+            isRotating={isRotating}
+            />
 
 
           <Island 
