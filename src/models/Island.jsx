@@ -6,6 +6,7 @@ import { a } from '@react-spring/three';
 
 import islandScene from '../assets/3d/island.glb';
 
+
 const Island = ({isRotating, setIsRotating, ...props }) => {
     const islandRef = useRef();
 
@@ -36,19 +37,6 @@ const handlePointerUp = (e) => {
     e.preventDefault();
     setIsRotating(false);
 
-    //Determine if touch event or mouse click
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-
-    //calculate the change in the horizontal position
-    const delta = (clientX - lastX.current)/viewport.width;
-
-    //update the Island's rotation based on the mouse *Math.PI because it is circular
-    islandRef.current.rotation.y += delta * 0.01 * Math.PI;
-
-    //Save Island rotation and update based on new position and moused movement speed
-    lastX.current =clientX;
-    rotationSpeed.current = delta * 0.01 * Math.PI;
-
 };
 
 // Function for when you press click mouse and move it, get event (e)
@@ -56,8 +44,18 @@ const handlePointerMove = (e) => {
     e.stopPropagation();
     e.preventDefault();
 
-    if(isRotating) {
-        handlePointerUp(e);
+    if(isRotating) { //Determine if touch event or mouse click
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    
+        //calculate the change in the horizontal position
+        const delta = (clientX - lastX.current)/viewport.width;
+    
+        //update the Island's rotation based on the mouse *Math.PI because it is circular
+        islandRef.current.rotation.y += delta * 0.01 * Math.PI;
+    
+        //Save Island rotation and update based on new position and moused movement speed
+        lastX.current =clientX;
+        rotationSpeed.current = delta * 0.01 * Math.PI;
     }
    
 };
@@ -93,6 +91,8 @@ useFrame (() => {
         if(Math.abs(rotationSpeed.current) < 0.001) {
             rotationSpeed.current =0;
         }
+
+        islandRef.current.rotation.y += rotationSpeed.current
     } else {
         //if it is rotating
         const rotation = islandRef.current.rotation.y;
@@ -137,27 +137,28 @@ useFrame (() => {
 
 //Create new useEffect with a callback function to use all of the functions handling mouse position and movement that will happen whenever one of the variables in the dependcy rate changes.
 useEffect(() => {
+// attach mouse and keyboard movements to a canvas, to touch just the canvas not just the normal DOM
+const canvas = gl.domElement;
+
     //need to add event listeners at the start for all pointer movements- this is adding events 
-    document.addEventListener('pointerdown', handlePointerDown);
-    document.addEventListener('pointerUp', handlePointerUp);
-    document.addEventListener('pointermove', handlePointerMove);
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    canvas.addEventListener('pointerUp', handlePointerUp);
+    canvas.addEventListener('pointermove', handlePointerMove);
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
 
-    //this is removing events from the canvas
+    //this is removing the click events from the canvas
     return () => {
-        document.addEventListener('pointerdown', handlePointerDown);
-        document.addEventListener('pointerUp', handlePointerUp);
-        document.addEventListener('pointermove', handlePointerMove);
-        document.addEventListener('keydown', handleKeyDown);
-        document.addEventListener('keyup', handleKeyUp);
+        canvas.removeEventListener('pointerdown', handlePointerDown);
+        canvas.removeEventListener('pointerUp', handlePointerUp);
+        canvas.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('keyup', handleKeyUp);
 
     }
 
 
 },  [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
-
-
 
 
 
