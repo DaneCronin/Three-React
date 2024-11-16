@@ -1,6 +1,8 @@
-import React, {useState, useRef} from 'react'
+import React, {Suspense, useState, useRef} from 'react'
 import emailjs from '@emailjs/browser';
-
+import { Canvas } from '@react-three/fiber';
+import Loader from '../components/Loader';
+import Fox from '../models/Fox';
 
 
 const Contact = () => {
@@ -12,6 +14,9 @@ const Contact = () => {
   //New State to show/track loading progress of sending message
   const [isLoading, setIsLoading]  = useState(false);
 
+  //Define Animation states with the current animation set to Idle at the start
+  const [currentAnimation, setCurrentAnimation] = useState('idle');
+
   //handleChange function to handle the changes input into the form
   const handleChange = (e) => {
     // Taking key press event and based off the event calls set form function where it sets across all other form properties and updates to e.target.value
@@ -20,17 +25,19 @@ const Contact = () => {
    };
 
   //function to check state if clicked in input field and typing to begin animation of fox to start walking- called once you click on it
-  const handleFocus = () => {};
+  const handleFocus = () => setCurrentAnimation('walk');
 
 
   //Function to handle once you click out of the input fields
-  const handleBlur = () => {};
+  const handleBlur = () => setCurrentAnimation('idle');
 
   //Function to handlde submit of Form and attach a ref to it so we can reference the email. Define new ref above. handleSubmit gets the final key press event
   const handleSubmit = (e) => {
     // e.preventDefault to not use default to reload page, then initiate the loading process with setIsLoading to true.
     e.preventDefault();
     setIsLoading(true);
+    // Set the animation to run when form is sent
+    setCurrentAnimation('hit');
 
     //Sending all info from form to our email with emailjs and its an asynchronous operation so need .then
     emailjs.send(
@@ -47,11 +54,23 @@ const Contact = () => {
     ) .then(() => {
       //set loading to false because it is complete, add success message
       setIsLoading(false);
-      //Clear form afte sent
-      setForm({name:'', email: '', message: ''})
+
+      //create a custom Hook - linked to hooks folder files to set an alert. Allows use of same custom alert hook multiple times across project
+
+
+      //Callback function to stop fox from running and go back to idle after a specified timeout period after 3 seconds.
+      setTimeout(() => {
+        setCurrentAnimation('idle');
+         //Clear form afte sent
+        setForm({name:'', email: '', message: ''})
+      }, [3000])
+     
+      
       //show success message
     }).catch((error) => {
       setIsLoading(false);
+      // Set current animation back to idle after form is sent
+      setCurrentAnimation('idle');
       console.log(error);
 
     })
@@ -89,6 +108,30 @@ const Contact = () => {
 </button>
 
     </form>
+  </div>
+
+  <div className="lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]">
+  <Canvas
+    camera={{
+      position: [0, 0, 5],
+      fov: 75,
+      near: 0.1,
+      far: 1000
+    }}>
+      <directionalLight intensity={2.5} position={[0, 0, 1]}/>
+      <ambientLight intensity={0.5}/>
+      <Suspense fallback = {Loader}>
+        <Fox
+        // Pass Animation state to Fox object
+        currentAnimation={currentAnimation}
+          position= {[0.5 , 0.35, 0]}
+          rotation = {[12.6, -0.6 ,0]}
+          scale = {[0.5, 0.5, 0.5]}
+          />
+      </Suspense>
+
+  </Canvas>
+
   </div>
   </section>
   )
