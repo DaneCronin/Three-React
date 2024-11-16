@@ -16,8 +16,8 @@ const useAlert = () => {
 
 
     
-  return (alert, showAlert, hideAlert
-  )
+  return { alert, showAlert, hideAlert
+  }
 }
 
 export default useAlert

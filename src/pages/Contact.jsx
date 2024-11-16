@@ -3,6 +3,8 @@ import emailjs from '@emailjs/browser';
 import { Canvas } from '@react-three/fiber';
 import Loader from '../components/Loader';
 import Fox from '../models/Fox';
+import useAlert from '../hooks/useAlert';
+import Alert from '../components/Alert';
 
 
 const Contact = () => {
@@ -16,6 +18,10 @@ const Contact = () => {
 
   //Define Animation states with the current animation set to Idle at the start
   const [currentAnimation, setCurrentAnimation] = useState('idle');
+
+  //Import custom Alert Hook
+  const { alert, showAlert, hideAlert} = useAlert();
+
 
   //handleChange function to handle the changes input into the form
   const handleChange = (e) => {
@@ -56,12 +62,13 @@ const Contact = () => {
       setIsLoading(false);
 
       //create a custom Hook - linked to hooks folder files to set an alert. Allows use of same custom alert hook multiple times across project
-
+      showAlert({ show: true, text: 'Message sent successfully!', type: 'success'})
 
       //Callback function to stop fox from running and go back to idle after a specified timeout period after 3 seconds.
       setTimeout(() => {
         setCurrentAnimation('idle');
-         //Clear form afte sent
+        hideAlert();
+         //Clear form after sent
         setForm({name:'', email: '', message: ''})
       }, [3000])
      
@@ -72,6 +79,7 @@ const Contact = () => {
       // Set current animation back to idle after form is sent
       setCurrentAnimation('idle');
       console.log(error);
+      showAlert({ show: true, text: 'Message did not send!', type: 'danger'})
 
     })
   };
@@ -80,6 +88,8 @@ const Contact = () => {
 
   return (
  <section className='relative flex lg:flex-row flex-col max-container'>
+ {/* Show Alert if Message sent/ not sent - if show alert is true, then render component and pass all of the alert properties ...alert and this alert is a separate component */}
+ {alert.show && <Alert {...alert}/>}
   <div className='flex-1 min-w-[50%] flex flex-col'>
     <h1 className='head-text'>Get in Touch</h1>
 
