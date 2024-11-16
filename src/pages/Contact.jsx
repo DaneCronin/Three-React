@@ -67,7 +67,7 @@ const Contact = () => {
       //Callback function to stop fox from running and go back to idle after a specified timeout period after 3 seconds.
       setTimeout(() => {
         setCurrentAnimation('idle');
-        hideAlert();
+        hideAlert(false);
          //Clear form after sent
         setForm({name:'', email: '', message: ''})
       }, [3000])
@@ -120,7 +120,7 @@ const Contact = () => {
     </form>
   </div>
 
-  <div className="lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]">
+  <div className="lg:w-1/2 flex w-full lg:h-auto md:h-[550px] h-[350px]">
   <Canvas
     camera={{
       position: [0, 0, 5],

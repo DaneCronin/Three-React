@@ -1,4 +1,4 @@
-import React,  {useState} from 'react'
+import {useState} from 'react'
 
 const useAlert = () => {
     //Initiate alert set show to false to not dispaly at the start
@@ -16,8 +16,7 @@ const useAlert = () => {
 
 
     
-  return { alert, showAlert, hideAlert
-  }
+  return { alert, showAlert, hideAlert };
 }
 
 export default useAlert
