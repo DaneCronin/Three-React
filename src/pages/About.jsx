@@ -3,6 +3,7 @@ import React from 'react'
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import {skills, experiences} from '../constants/index';
+import CTA from '../components/CTA';
 
 const About = () => {
   return (
@@ -87,6 +88,11 @@ const About = () => {
 </div>
 
 </div>
+
+{/* CTA section to link to Contact */}
+<hr className='border-slate-200'/>
+<CTA/>
+
 
     </section>
 

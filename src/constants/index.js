@@ -149,7 +149,7 @@ export const socialLinks = [
 
 export const projects = [
     {
-        iconUrl: ECommerce,
+        // iconUrl: ECommerce,
         theme: 'btn-back-red',
         name: 'ECommerce',
         description: 'Developed a web application for users to sign up, add items to a shopping cart and checkout using Stripe API.',
@@ -157,7 +157,7 @@ export const projects = [
     },
    
     {
-        iconUrl: MineCraft,
+        // iconUrl: MineCraft,
         theme: 'btn-back-blue',
         name: 'MineCraft',
         description: 'Designed and built a social app where users can sign up, build a world in a MineCraft type environment and save a rendering of the world to post and share.',
@@ -165,7 +165,7 @@ export const projects = [
     },
    
     {
-        iconUrl: PicMe,
+        // iconUrl: PicMe,
         theme: 'btn-back-black',
         name: 'PicMe',
         description: 'Developed a web application for users to sign up, login and make posts for other users to like and comment.',
