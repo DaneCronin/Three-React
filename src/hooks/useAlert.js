@@ -19,4 +19,4 @@ const useAlert = () => {
   return { alert, showAlert, hideAlert };
 }
 
-export default useAlert
+export default useAlert;

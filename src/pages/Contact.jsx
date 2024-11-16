@@ -20,7 +20,7 @@ const Contact = () => {
   const [currentAnimation, setCurrentAnimation] = useState('idle');
 
   //Import custom Alert Hook
-  const { alert, showAlert, hideAlert} = useAlert();
+  const {alert, showAlert, hideAlert} = useAlert();
 
 
   //handleChange function to handle the changes input into the form
@@ -74,11 +74,11 @@ const Contact = () => {
      
       
       //show success message
-    }).catch((error) => {
+    }, (error) => {
       setIsLoading(false);
       // Set current animation back to idle after form is sent
       setCurrentAnimation('idle');
-      console.log(error);
+      console.error(error);
       showAlert({ show: true, text: 'Message did not send!', type: 'danger'})
 
     })
@@ -87,9 +87,10 @@ const Contact = () => {
 
 
   return (
- <section className='relative flex lg:flex-row flex-col max-container'>
+ <section className='relative flex lg:flex-row flex-col max-container h-[100vh]'>
  {/* Show Alert if Message sent/ not sent - if show alert is true, then render component and pass all of the alert properties ...alert and this alert is a separate component */}
  {alert.show && <Alert {...alert}/>}
+
   <div className='flex-1 min-w-[50%] flex flex-col'>
     <h1 className='head-text'>Get in Touch</h1>
 
