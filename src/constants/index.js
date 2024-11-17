@@ -1,9 +1,8 @@
-// import {DaneCroninPhotography, UNCCharlotte, FullCycle  } from "../assets/images";
+//  import {UNCCharlotte  } from "../assets/images";
+
 import {
-    // ReactMC,
     contact,
     css,
-    // PicMe,
     express,
     git,
     github,
@@ -13,11 +12,11 @@ import {
     mongodb,
     nextjs,
     nodejs,
-    // ECommerce,
     react,
     redux,
     sass,
-    tailwindcss
+    tailwindcss,
+
 } from "../assets/icons";
 
 export const skills = [
